@@ -4,6 +4,7 @@ import { StackNavigator } from 'react-navigation';
 import HomeScreen from './screens/home';
 import CONFIG from './constants/index';
 import Video from './screens/video';
+import Settings from './screens/settings';
 export default class App extends React.Component {
   render() {
     return (
@@ -13,10 +14,13 @@ export default class App extends React.Component {
 }
 const RootStack = StackNavigator({
   home: {
-    screen: HomeScreen,
+    screen: HomeScreen
   },
-  video :{
-    screen : Video
+  video: {
+    screen: Video
+  },
+  settings: {
+    screen: Settings
   }
 });
 
