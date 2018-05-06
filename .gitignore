@@ -2,7 +2,7 @@
 
 # expo
 .expo/
-
+test.js
 constants/
 # dependencies
 /node_modules
