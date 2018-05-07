@@ -85,7 +85,10 @@ export default class Settings extends React.Component {
                
                   }catch(e){
 
+
                   } }
+
+                  
                  _setData(itemValue){
                  this.setState({region :itemValue}) 
                   

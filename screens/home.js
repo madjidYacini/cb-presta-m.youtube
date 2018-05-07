@@ -16,7 +16,13 @@ import {CONFIG} from '../constants/index';
 import { Icon } from 'react-native-elements'
 import Video from './video';
 export default class HomeScreen extends React.Component {
-                 state = { video: [], Country: "France", search: false, textSearch: null, countryTrend : false
+                 state = { 
+                   video: [],
+                   Country: "France",
+                    search: false, 
+                    textSearch: null,
+                     countryTrend : false,
+                     likedVideo:[]
                  };
                  componentDidMount() {
                    this._fetch();
@@ -30,6 +36,7 @@ export default class HomeScreen extends React.Component {
                    try {
                      const result = AsyncStorage.getItem(CONFIG.STORAGE.AVAILABLE_REGIONS).then(
                        result => {
+                        //  console.log(result);
                          if (result) {
                            countries = JSON.parse(result);
                            this.setState({ countries });
@@ -39,6 +46,8 @@ export default class HomeScreen extends React.Component {
                    } catch (e) {
                      console.log(e);
                    }
+
+                      
                  }
                  _fetchForSearch = () => {
                    const qb = "&part=snippet,id&order=rating&maxResult=5&q=";
@@ -125,6 +134,22 @@ export default class HomeScreen extends React.Component {
                      });
                  };
 
+                 _like(item){
+                  //  console.log("item is " ,item);
+                  const listVideoLiked = this.state.likedVideo
+                   listVideoLiked.push(item);
+                   console.log(listVideoLiked.length);
+                   const str = JSON.stringify(listVideoLiked)
+                    console.log("tis is sparta",this.state.likedVideo);
+                    try {
+                      AsyncStorage.setItem("LikedVid", str);
+                    } catch (error) {
+                      console.log("madjid", error);
+                    }
+                  //  console.log(this.state.likedVideo);
+                  
+                 }
+
                  _fetch() {
                    const qp = "&part=snippet,id&order=rating&maxResults=20&chart=mostPopular";
                    const { BASE_URL, API_KEY } = CONFIG.YOUTUBE;
@@ -154,7 +179,7 @@ export default class HomeScreen extends React.Component {
                          <TouchableOpacity style={{ paddingHorizontal: 5 }} onPress={() => state.params.random()}>
                            <Image style={{ width: 20, height: 20 }} source={require("../assets/hashtag.png")} />
                          </TouchableOpacity>
-                         <TouchableOpacity style={{ paddingHorizontal: 5 }}>
+                         <TouchableOpacity style={{ paddingHorizontal: 5 }} onPress={() => navigation.navigate("like", {})}>
                            <Image style={{ width: 20, height: 20 }} source={require("../assets/love.png")} />
                          </TouchableOpacity>
 
@@ -182,7 +207,7 @@ export default class HomeScreen extends React.Component {
                                    url: item.id.videoId
                                  }
                                )
-                             }
+                             } key = {id} onLongPress= {()=>this._like(item)}
                            >
                              <Image
                                style={{

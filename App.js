@@ -5,6 +5,7 @@ import HomeScreen from './screens/home';
 import CONFIG from './constants/index';
 import Video from './screens/video';
 import Settings from './screens/settings';
+import LikedVideo from './screens/likedVideo'
 export default class App extends React.Component {
   render() {
     return (
@@ -21,6 +22,9 @@ const RootStack = StackNavigator({
   },
   settings: {
     screen: Settings
+  },
+  like :{
+    screen : LikedVideo
   }
 });
 
